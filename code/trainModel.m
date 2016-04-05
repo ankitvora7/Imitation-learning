@@ -10,11 +10,11 @@ numFeatures = size(features,2);
 
 % % Get training paths
 % path = getTrainingPaths(map, numPaths);
-% save('pathsbigWalk.mat','path')
+% save('pathssmallWalk.mat','path')
 load('pathsbigWalk.mat')
 
 % Initialize weights
-weights = ones(numFeatures,1)*numFeatures;
+weights = ones(numFeatures,1).*numFeatures;
 
 for i = 1:numIter
     
@@ -23,12 +23,16 @@ for i = 1:numIter
     costMap = getCostMap(features, weights);
     
     % Get djikstra's path
-    path = getDjikstraPaths(path, costMap, map);    
+    path = getDjikstraPaths(path, costMap, map);
   
     % Compute new weights
-    weights = computeWeights(path, features, weights, map, learnRate);
+    [weights,J] = computeWeights(path, features, weights, map, learnRate, costMap);
+
+    plot(i,J,'b+')
+    hold on
+    pause(0.001)
     
 end
-costMapDrive = costMap;
-save('costMapBigWalk.mat','costMapDrive');
+costMapWalk = costMap;
+save('costMapBigWalk.mat','costMapWalk');
  

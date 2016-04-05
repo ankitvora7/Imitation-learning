@@ -3,7 +3,7 @@ function path = getPath(costMap, wayPts)
 % compute path for test set
 if sum(sum(costMap<0))>0
     disp('Making positive cost map values')
-    costMap = costMap - min(min(costMap));
+    costMap = costMap - min(min(costMap)) + 1;
 end
 
 start = wayPts(1,:);

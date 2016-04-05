@@ -1,6 +1,9 @@
 % Test the models
+clear all
+close all
 addpath(genpath('./'))
 load('costMapBigDrive.mat')
+load('costMapBigWalk.mat')
 map = imread('../maps/map_big.jpg');
 map = imresize(map, 0.2);
 
@@ -10,7 +13,7 @@ while flag=='y'
     str = input('Enter w for walk and d for drive :','s');
     if str=='w'
         imshow(map)
-        wayPts = ceil(ginput);
+        wayPts = ceil(ginput(2));
         walkPath = getPath(costMapWalk, wayPts);
         hold on
         plot(walkPath(:,1),walkPath(:,2),'r.')
@@ -21,7 +24,7 @@ while flag=='y'
         allTestPaths{counter}.path = walkPath;
     elseif str=='d'
         imshow(map)
-        wayPts = ceil(ginput);
+        wayPts = ceil(ginput(2));
         drivePath = getPath(costMapDrive, wayPts);
         hold on
         plot(drivePath(:,1),drivePath(:,2),'r.')

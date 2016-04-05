@@ -16,7 +16,7 @@ ab = reshape(ab,nrows*ncols,2);
 nColors = 10;
 % repeat the clustering 3 times to avoid local minima
 disp('Clustering...')
-[cluster_idx, cluster_center] = kmeans(ab,nColors,'distance','sqEuclidean');
+[cluster_idx, cluster_center] = kmeans(ab,nColors,'distance','sqEuclidean','Replicates',3);
 pixel_labels = reshape(cluster_idx,nrows,ncols);
 imshow(pixel_labels,[]), title('image labeled by cluster index');
 segmented_images = cell(1,nColors);
@@ -25,7 +25,7 @@ disp('Clustering finished')
 
 for k = 1:nColors
     color = lab_im(:,:,2);
-    color(rgb_label ~= k) = 1;
+    color(rgb_label ~= k) = 1;    
     color = imgaussfilt(color, 0.5);
     color = color./max(max(color));
     color = bsxfun(@minus,1,color);
@@ -35,5 +35,7 @@ for k = 1:nColors
     pause;
     close all
 end
+% [~,segmented_images{end+1}] = detectBrightRoad(im);
+% [~,segmented_images{end+1}] = detectPathWay(im);
 features = segmented_images;
 save('featuresbig.mat','features')

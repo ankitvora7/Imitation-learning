@@ -6,7 +6,7 @@ numPaths = size(path,2);
 % Remove negative cost map values
 if sum(sum(costMap<0))>0
     disp('Making positive cost map values')
-    costMap = costMap - min(min(costMap));
+    costMap = costMap - min(min(costMap)) + 0.1;
 end
 
 for i = 1:numPaths
@@ -15,7 +15,7 @@ for i = 1:numPaths
     start = wayPts(1,:);
     goal = wayPts(end,:);
     costToGoal = dijkstra_matrix(costMap,goal(2),goal(1));
-    [x, y] = dijkstra_path(costToGoal, costMap, start(2), start(1));
+    [x, y] = dijkstra_path(costToGoal,costMap, start(2), start(1));
     path{i}.djikstraPath = [y x];
 %     imagesc(costMap)
 %     hold on

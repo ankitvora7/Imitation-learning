@@ -1,6 +1,7 @@
-function weights = computeWeights(path, features, weights, map, learnRate)
+function [weights,J] = computeWeights(path, features, weights, map, learnRate, costMap)
 
 % Compute new weights
+J = 0;
 disp('Computing new weights')
 numPaths = size(path,2);
 allDjikstraIdx = [];
@@ -13,7 +14,7 @@ for i= 1:numPaths
     allDjikstraIdx = [allDjikstraIdx;djikstraIdx];
     allHandIdx = [allHandIdx;handIdx];
 end
-
+J = sum(costMap(allHandIdx)) - sum(costMap(allDjikstraIdx));
 numFeatures = size(features,2);
 for i = 1:numFeatures
     curFeature = features{i};
